@@ -44,7 +44,7 @@ function App() {
               setLatitude(latitude);
               setLongitude(longitude);
             })
-            .catch(err => alert('Something went wrong'));
+            .catch(err => alert('No locations found'));
         }}>Near Me</button>
         <Locations locations={near}/>
       </header>

@@ -9,6 +9,7 @@ function Coordinates(props) {
   const finder = (lat, lon) => {
     axios.get(`https://pinballmap.com/api/v1/regions/closest_by_lat_lon.json?lat=${lat}&lon=${lon}`)
     .then((by) => {
+      console.log(by)
       let name = by.data.region.name;
       axios.get(`https://pinballmap.com/api/v1/region/${name}/locations.json`)
       .then((locs) => {
@@ -16,7 +17,7 @@ function Coordinates(props) {
       })
       .catch((err) => alert('Something went wrong'))
     })
-    .catch((err) => alert('Something went wrong'))
+    .catch((err) => alert("No pinball machines close by"))
   }
   /////////////////////////////////////////////////////////////////////////////
 
@@ -25,9 +26,10 @@ function Coordinates(props) {
   }, [latRef, lonRef])
 
   const handleSubmit = (e) => {
+    console.log(latRef.current.value, lonRef)
     e.preventDefault();
     alert('Searching');
-    finder(props.latitude, props.longitude);
+    finder(latRef.current.value, lonRef.current.value);
     // console.log(checkCoords(lonRef.current.value))
   }
 
