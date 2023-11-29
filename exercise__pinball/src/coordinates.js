@@ -1,8 +1,24 @@
 import React, { useRef, useEffect } from 'react';
+import axios from 'axios';
 
 function Coordinates(props) {
   const latRef = useRef(props.latitude);
   const lonRef = useRef(props.longitude);
+
+    // queries to find the name of the region I'm in, then finds the machines in that location
+  const finder = (lat, lon) => {
+    axios.get(`https://pinballmap.com/api/v1/regions/closest_by_lat_lon.json?lat=${lat}&lon=${lon}`)
+    .then((by) => {
+      let name = by.data.region.name;
+      axios.get(`https://pinballmap.com/api/v1/region/${name}/locations.json`)
+      .then((locs) => {
+        props.setNear(locs.data.locations)
+      })
+      .catch((err) => alert('Something went wrong'))
+    })
+    .catch((err) => alert('Something went wrong'))
+  }
+  /////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
 
@@ -10,7 +26,8 @@ function Coordinates(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('here');
+    alert('Searching');
+    finder(props.latitude, props.longitude);
     // console.log(checkCoords(lonRef.current.value))
   }
 
