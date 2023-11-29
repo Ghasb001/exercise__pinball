@@ -4,23 +4,27 @@ function Coordinates(props) {
   const latRef = useRef(props.latitude);
   const lonRef = useRef(props.longitude);
 
-useEffect(() => {
+  useEffect(() => {
 
-}, [latRef, lonRef])
+  }, [latRef, lonRef])
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  console.log(e.current)
-}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert('here');
+    // console.log(checkCoords(lonRef.current.value))
+  }
 
-  console.log('coordinates', props)
+  // const checkCoords = (input) => {
+  //   return Number.isNaN(parseInt(input)) ?  false :  true
+  // }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <label>
-        <input type="text" name="Latitude" placeholder="Latitude" ref={latRef}/>
-        <input type="text" name="Longitude" placeholder="Longitude" ref={lonRef}/>
+        <input type="text" name="Latitude" placeholder="Latitude" ref={latRef} defaultValue={props.latitude} />
+        <input type="text" name="Longitude" placeholder="Longitude" ref={lonRef} defaultValue={props.longitude} />
       </label>
-      <input type="submit" value="Submit" onSubmit={handleSubmit}/>
+      <input type="submit" value="Search" />
     </form>
   );
 }
