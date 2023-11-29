@@ -8,7 +8,6 @@ function App() {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [near, setNear] = useState([]);
-  console.log(near)
 
   // Get the current location based off the browser allowing locations
   const getLocation = async () => {
