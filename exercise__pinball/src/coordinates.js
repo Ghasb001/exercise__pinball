@@ -38,7 +38,7 @@ function Coordinates(props) {
   // }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form data-testid="search-button" onSubmit={handleSubmit}>
       <label>
         <input type="text" name="Latitude" placeholder="Latitude" ref={latRef} defaultValue={props.latitude} />
         <input type="text" name="Longitude" placeholder="Longitude" ref={lonRef} defaultValue={props.longitude} />

@@ -7,7 +7,8 @@ import Locations from './locations.js'
 function App() {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [near, setNear] = useState([])
+  const [near, setNear] = useState([]);
+  console.log(near)
 
   // Get the current location based off the browser allowing locations
   const getLocation = async () => {
@@ -38,7 +39,7 @@ function App() {
         Enter Coordinates
         <Coordinates latitude={latitude} longitude={longitude} near={near} setNear={setNear}/>
         ----------------------
-        <button onClick={() => {
+        <button data-testid="near-button" onClick={() => {
           getLocation()
             .then(({ latitude, longitude }) => {
               setLatitude(latitude);
