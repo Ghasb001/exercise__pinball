@@ -25,15 +25,15 @@ function Coordinates(props) {
   }, [latRef, lonRef])
 
   const handleSubmit = (e) => {
+    if (!latRef.current.value || !lonRef.current.value) {
+      alert('Please enter valid coordinates');
+      return;
+    }
     e.preventDefault();
     alert('Searching');
     finder(latRef.current.value, lonRef.current.value);
-    // console.log(checkCoords(lonRef.current.value))
+    return;
   }
-
-  // const checkCoords = (input) => {
-  //   return Number.isNaN(parseInt(input)) ?  false :  true
-  // }
 
   return (
     <form data-testid="search-button" onSubmit={handleSubmit}>
