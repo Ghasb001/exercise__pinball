@@ -18,7 +18,6 @@ describe('App render tests', () => {
   });
 
   test('renders the locations component', () => {
-    // render(<Locations locations={[]} />);
     render(<Locations locations={[]} />);
     const loc = screen.getByTestId('locations');
     expect(loc).not.toBe(null);
