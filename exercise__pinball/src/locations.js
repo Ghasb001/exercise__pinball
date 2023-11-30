@@ -4,7 +4,7 @@ import SingleLocation from './singleLocation.js'
 function Locations(props) {
 
   return (
-    <div style={{paddingBottom: 10}}>
+    <div>
       {props.locations.length > 0 ?
         props.locations.map((l) => (
           <SingleLocation name={l.name} street={l.street}

@@ -30,7 +30,7 @@ function App() {
 
   const clickedBool = () => {
     return clicked ?
-    (<div className="loading">Loading Results</div>) :
+    (<div className="loading">Locating</div>) :
     (<div>Enter Coordinates</div>)
   }
 
