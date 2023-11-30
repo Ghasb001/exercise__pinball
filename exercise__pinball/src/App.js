@@ -9,6 +9,8 @@ function App() {
   const [longitude, setLongitude] = useState(null);
   const [near, setNear] = useState([]);
   const [clicked, setClicked] = useState(false);
+  const [incoming, setIncoming] = useState(false)
+  console.log(latitude, longitude)
 
   // Get the current location based off the browser allowing locations
   const getLocation = async () => {
@@ -30,23 +32,23 @@ function App() {
 
   const clickedBool = () => {
     return clicked ?
-    (<div className="loading">Locating</div>) :
-    (<div>Enter Coordinates</div>)
+      (<div className="loading">Locating</div>) :
+      (<div>Enter Coordinates</div>)
   }
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" style={{ padding: 20 }} />
-        {
-        clickedBool()
-        }
+        {clickedBool()}
         <Coordinates latitude={latitude}
           longitude={longitude}
           near={near}
           setNear={setNear}
           clicked={clicked}
           setClicked={setClicked}
+          incoming={incoming}
+          setIncoming={setIncoming}
         />
         ----------------------
         <button data-testid="near-button" onClick={() => {
@@ -59,7 +61,8 @@ function App() {
             })
             .catch(err => alert('No locations found'));
         }}>Near Me</button>
-        <Locations locations={near}/>
+        {incoming && near.length === 0 ? <div className="spinning-circle"></div>
+        : <Locations locations={near}></Locations>}
       </header>
     </div>
   );

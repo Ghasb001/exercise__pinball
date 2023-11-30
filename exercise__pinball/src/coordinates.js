@@ -55,6 +55,7 @@ function Coordinates(props) {
     // reset the ref values
     latRef.current.value = '';
     lonRef.current.value = '';
+    props.setIncoming(!props.incoming)
   };
 
 
