@@ -44,13 +44,10 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" style={{ padding: 20 }} />
         {clickedBool()}
-        <Coordinates latitude={latitude}
+        <Coordinates
+          latitude={latitude}
           longitude={longitude}
-          near={near}
           setNear={setNear}
-          clicked={clicked}
-          setClicked={setClicked}
-          incoming={incoming}
           setIncoming={setIncoming}
         />
         ----------------------

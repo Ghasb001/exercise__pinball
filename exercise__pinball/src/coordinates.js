@@ -28,7 +28,7 @@ function Coordinates(props) {
           })
           .catch((err) => alert('Something went wrong'));
       })
-      .catch((err) =>  {props.setIncoming(false); alert('No pinball machines close by')});
+      .catch((err) => { props.setIncoming(false); alert('No pinball machines close by') });
   };
 
   const handleSubmit = (e) => {
@@ -65,12 +65,14 @@ function Coordinates(props) {
     <form data-testid="search-button" onSubmit={handleSubmit}>
       <label>
         <input
+          data-testid="latitude"
           type="text"
           name="Latitude"
           placeholder="Latitude"
           ref={latRef}
         />
         <input
+          data-testid="longitude"
           type="text"
           name="Longitude"
           placeholder="Longitude"

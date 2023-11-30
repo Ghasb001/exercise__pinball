@@ -4,7 +4,7 @@ import SingleLocation from './singleLocation.js'
 function Locations(props) {
 
   return (
-    <div>
+    <div data-testid="locations">
       {props.locations.length > 0 ?
         props.locations.map((l) => (
           <SingleLocation name={l.name} street={l.street}
@@ -12,7 +12,7 @@ function Locations(props) {
             key={l.id} />
         ))
         :
-        null
+        <div data-testid="nullLoc">{null}</div>
       }
     </div>
   )
