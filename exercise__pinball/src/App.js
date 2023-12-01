@@ -10,6 +10,7 @@ function App() {
   const [near, setNear] = useState([]);
   const [clicked, setClicked] = useState(false);
   const [incoming, setIncoming] = useState(false);
+  const [err, setErr] = useState('')
 
   // Get the current location based off the browser allowing locations
   const getLocation = async () => {
@@ -49,7 +50,9 @@ function App() {
           longitude={longitude}
           setNear={setNear}
           setIncoming={setIncoming}
+          setErr={setErr}
         />
+        <div>{err}</div>
         ----------------------
         <button data-testid="near-button" onClick={() => {
           setClicked(true);
@@ -59,7 +62,7 @@ function App() {
               setLongitude(longitude);
               setClicked(false)
             })
-            .catch(err => alert('No locations found'));
+            .catch(err => alert('Your location could not be found'));
         }}>Near Me</button>
         {incoming && near.length === 0 ? <div className="spinning-circle"></div>
           : <Locations locations={near}></Locations>}

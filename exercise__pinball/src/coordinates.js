@@ -28,7 +28,7 @@ function Coordinates(props) {
           })
           .catch((err) => alert('Something went wrong'));
       })
-      .catch((err) => { props.setIncoming(false); alert('No pinball machines close by') });
+      .catch((err) => { props.setIncoming(false); props.setErr(('No pinball machines close by')) });
   };
 
   const handleSubmit = (e) => {
@@ -39,7 +39,7 @@ function Coordinates(props) {
 
     // validate the coordinates before the API is called
     if (!validate(latitude, longitude)) {
-      alert('Please enter valid coordinates');
+      props.setErr('Please enter valid coordinates');
       latRef.current.value = '';
       lonRef.current.value = '';
       return;
@@ -53,6 +53,7 @@ function Coordinates(props) {
     latRef.current.value = '';
     lonRef.current.value = '';
     props.setIncoming(!props.incoming);
+    props.setErr('')
   };
 
   // Update the input values when props coordinateschange
