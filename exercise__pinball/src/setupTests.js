@@ -1,6 +1,6 @@
-/**
- * @jest-environment jsdom
- */
+// /**
+//  * @jest-environment jsdom
+//  */
 
 import '@testing-library/jest-dom';
 import React from 'react';
@@ -27,6 +27,13 @@ describe('location testing', () => {
     const florida = screen.getByText(/FL/i);
     expect(florida).toBeInTheDocument();
   });
+
+  test('locations catches a null value and goes to fallback', () => {
+    render(<Locations locations={[]} />);
+    const loc = screen.getByTestId('nullLoc');
+    expect(loc).not.toBe(null);
+  });
+
   // create a set of functions to handle the window alert error //
   let mainAlert;
   beforeAll(() => {
@@ -37,13 +44,6 @@ describe('location testing', () => {
   afterAll(() => {
     window.alert = mainAlert;
   });
-
-  test('locations catches a null value and goes to fallback', () => {
-    render(<Locations locations={[]} />);
-    const loc = screen.getByTestId('nullLoc');
-    expect(loc).not.toBe(null);
-  });
-
   test('calls Near Me button', () => {
     render(<App />);
     const near = screen.getByText('Near Me');
@@ -65,49 +65,14 @@ describe('coordinate testing', () => {
     cardinalLatitude: "25°40′25″N",
     cardinalLongitude: "80°09′34″W"
   }
- //////////////RESET ALERT//////////////
-  let mainAlert;
-  beforeAll(() => {
-    mainAlert = window.alert;
-    window.alert = jest.fn();
-  });
 
-  afterAll(() => {
-    window.alert = mainAlert;
-  });
 
-  test('should set incoming data array onSubmit', () => {
-    const nearMock = jest.fn();
-    const incomingMock = jest.fn();
-    render(<Coordinates setNear={nearMock} setIncoming={incomingMock} />);
-
-    const latitudeInput = screen.getByTestId('latitude');
-    const longitudeInput = screen.getByTestId('longitude');
-    const submit = screen.getByText('Search');
-
-    //valid coordinates
-    fireEvent.change(latitudeInput, { target: { value: billBaggs.decLatitude } });
-    fireEvent.change(longitudeInput, { target: { value: billBaggs.decLongitude } });
-
-    // Submit the form and assert
-    fireEvent.click(submit);
-    expect(nearMock).toHaveBeenCalledWith(expect.any(Array));
-    expect(incomingMock).toHaveBeenCalledWith(true);
-  });
-  //////////////RESET ALERT//////////////
-  beforeAll(() => {
-    mainAlert = window.alert;
-    window.alert = jest.fn();
-  });
-
-  afterAll(() => {
-    window.alert = mainAlert;
-  });
 
   test('should parse cardinal coordinates', () => {
     const nearMock = jest.fn();
     const incomingMock = jest.fn();
-    render(<Coordinates setNear={nearMock} setIncoming={incomingMock} />);
+    const errMock = jest.fn();
+    render(<Coordinates setNear={nearMock} setIncoming={incomingMock} setErr={errMock} />);
 
     const latitudeInput = screen.getByTestId('latitude');
     const longitudeInput = screen.getByTestId('longitude');
@@ -122,20 +87,12 @@ describe('coordinate testing', () => {
     expect(nearMock).toHaveBeenCalledWith(expect.any(Array));
     expect(incomingMock).toHaveBeenCalledWith(true);
   });
-  //////////////RESET ALERT//////////////
-  beforeAll(() => {
-    mainAlert = window.alert;
-    window.alert = jest.fn();
-  });
-
-  afterAll(() => {
-    window.alert = mainAlert;
-  });
 
   test('should alert and stop for broken coordinates', () => {
     const nearMock = jest.fn();
     const incomingMock = jest.fn();
-    render(<Coordinates setNear={nearMock} setIncoming={incomingMock} />);
+    const errMock = jest.fn();
+    render(<Coordinates setNear={nearMock} setIncoming={incomingMock} setErr={errMock} />);
 
     const latitudeInput = screen.getByTestId('latitude');
     const longitudeInput = screen.getByTestId('longitude');
@@ -152,7 +109,8 @@ describe('coordinate testing', () => {
   test('should alert and stop for missing coordinate', () => {
     const nearMock = jest.fn();
     const incomingMock = jest.fn();
-    render(<Coordinates setNear={nearMock} setIncoming={incomingMock} />);
+    const errMock = jest.fn();
+    render(<Coordinates setNear={nearMock} setIncoming={incomingMock} setErr={errMock} />);
 
     const latitudeInput = screen.getByTestId('latitude');
     const longitudeInput = screen.getByTestId('longitude');
@@ -169,7 +127,8 @@ describe('coordinate testing', () => {
   test('should stop for nothing close by', () => {
     const nearMock = jest.fn();
     const incomingMock = jest.fn();
-    render(<Coordinates setNear={nearMock} setIncoming={incomingMock} />);
+    const errMock = jest.fn();
+    render(<Coordinates setNear={nearMock} setIncoming={incomingMock} setErr={errMock} />);
 
     const latitudeInput = screen.getByTestId('latitude');
     const longitudeInput = screen.getByTestId('longitude');

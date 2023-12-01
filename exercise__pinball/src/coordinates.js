@@ -53,10 +53,10 @@ function Coordinates(props) {
     latRef.current.value = '';
     lonRef.current.value = '';
     props.setIncoming(!props.incoming);
-    props.setErr('')
+    props.setErr('');
   };
 
-  // Update the input values when props coordinateschange
+  // Update the input values when props/coordinates change
   useEffect(() => {
     latRef.current.value = props.latitude || '';
     lonRef.current.value = props.longitude || '';

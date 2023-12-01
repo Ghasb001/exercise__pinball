@@ -51,6 +51,7 @@ function App() {
           setNear={setNear}
           setIncoming={setIncoming}
           setErr={setErr}
+          err={err}
         />
         <div>{err}</div>
         ----------------------
