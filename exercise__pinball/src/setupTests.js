@@ -141,6 +141,8 @@ describe('coordinate testing', () => {
     /* The function should be called once, since the coordinates are valid and pass the validator.
     It shouldn't render anything, as are no machines in Null Island, since it's in the middle of the ocean */
     expect(incomingMock).toHaveBeenCalledTimes(1);
+    // since there was techincally an error, errMock had to have been called to handle the state
+    expect(errMock).toHaveBeenCalledTimes(1);
   });
 
 })
