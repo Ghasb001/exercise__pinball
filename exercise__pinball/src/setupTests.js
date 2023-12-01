@@ -9,7 +9,7 @@ import App from './App';
 import Locations from './locations';
 import Coordinates from './coordinates';
 
-describe('component testing', () => {
+describe('location testing', () => {
   test('renders list from coordinates', () => {
     let fl = [{
       "id": 13230,
@@ -27,7 +27,7 @@ describe('component testing', () => {
     const florida = screen.getByText(/FL/i);
     expect(florida).toBeInTheDocument();
   });
-
+  // create a set of functions to handle the window alert error //
   let mainAlert;
   beforeAll(() => {
     mainAlert = window.alert;
@@ -56,17 +56,16 @@ describe('component testing', () => {
 })
 
 
-describe('coordinate testing', () => {
 
+describe('coordinate testing', () => {
   // Bill Baggs State Park; great for fishing
   const billBaggs = {
     decLatitude: '25.673778570323815',
     decLongitude: '-80.1586266254315',
     cardinalLatitude: "25°40′25″N",
-    cardinalLongitude: "80°09′34″W."
+    cardinalLongitude: "80°09′34″W"
   }
-
-  // create a set of functions to handle the window alert error //
+ //////////////RESET ALERT//////////////
   let mainAlert;
   beforeAll(() => {
     mainAlert = window.alert;
@@ -76,7 +75,7 @@ describe('coordinate testing', () => {
   afterAll(() => {
     window.alert = mainAlert;
   });
-  ////////////////////////////////////////////////////////////////
+
   test('should set incoming data array onSubmit', () => {
     const nearMock = jest.fn();
     const incomingMock = jest.fn();
@@ -133,7 +132,7 @@ describe('coordinate testing', () => {
     window.alert = mainAlert;
   });
 
-  test('broken coordinates', () => {
+  test('should alert and stop for broken coordinates', () => {
     const nearMock = jest.fn();
     const incomingMock = jest.fn();
     render(<Coordinates setNear={nearMock} setIncoming={incomingMock} />);
@@ -142,13 +141,47 @@ describe('coordinate testing', () => {
     const longitudeInput = screen.getByTestId('longitude');
     const submit = screen.getByText('Search');
 
-    //valid coordinates (Bill Baggs State Park; great for fishing)
-    fireEvent.change(latitudeInput, { target: { value: 'ohnomylocation' } });
-    fireEvent.change(longitudeInput, { target: { value: 'it\'sbroken' } });
+    fireEvent.change(latitudeInput, { target: { value: 'oh-no-my-location' } });
+    fireEvent.change(longitudeInput, { target: { value: 'it\'s-broken' } });
     // break the form
     fireEvent.click(submit);
     // Check that functions were not called
     expect(incomingMock).toHaveBeenCalledTimes(0);
+  });
+
+  test('should alert and stop for missing coordinate', () => {
+    const nearMock = jest.fn();
+    const incomingMock = jest.fn();
+    render(<Coordinates setNear={nearMock} setIncoming={incomingMock} />);
+
+    const latitudeInput = screen.getByTestId('latitude');
+    const longitudeInput = screen.getByTestId('longitude');
+    const submit = screen.getByText('Search');
+
+    fireEvent.change(latitudeInput, { target: { value: '25.1567° N' } });
+    fireEvent.change(longitudeInput, { target: { value: '' } });
+    // break the form
+    fireEvent.click(submit);
+    // Check that functions were not called
+    expect(incomingMock).toHaveBeenCalledTimes(0);
+  });
+
+  test('should stop for nothing close by', () => {
+    const nearMock = jest.fn();
+    const incomingMock = jest.fn();
+    render(<Coordinates setNear={nearMock} setIncoming={incomingMock} />);
+
+    const latitudeInput = screen.getByTestId('latitude');
+    const longitudeInput = screen.getByTestId('longitude');
+    const submit = screen.getByText('Search');
+
+    fireEvent.change(latitudeInput, { target: { value: '0' } });
+    fireEvent.change(longitudeInput, { target: { value: '0' } });
+    // break the form
+    fireEvent.click(submit);
+    /* The function should be called once, since the coordinates are valid and pass the validator.
+    It shouldn't render anything, as are no machines in Null Island, since it's in the middle of the ocean */
+    expect(incomingMock).toHaveBeenCalledTimes(1);
   });
 
 })
